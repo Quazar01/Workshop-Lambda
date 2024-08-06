@@ -1,6 +1,9 @@
 package se.lexicon;
 
 import se.lexicon.data.DataStorage;
+import se.lexicon.model.Person;
+
+import java.util.function.Predicate;
 
 public class Exercises {
 
@@ -12,6 +15,8 @@ public class Exercises {
     public static void exercise1(String message) {
         System.out.println(message);
         //Write your code here
+         Predicate<Person> filter = person -> person.getFirstName().equalsIgnoreCase("Erik");
+        storage.findMany(filter).forEach(System.out::println);
 
         System.out.println("----------------------");
     }
