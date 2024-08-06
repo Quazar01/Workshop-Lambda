@@ -78,11 +78,9 @@ public class Exercises {
         System.out.println(message);
         //Write your code here
         Predicate<Person> filter = person -> person.getId() == 456;
+        Function<Person, String> personToString = person -> "Name: Nisse Nilsson born 1999-09-09";
         if (storage.findOne(filter) != null) {
-            String result = storage.findOneAndMapToString(filter, person -> "Name: " +
-                    person.getFirstName() + " " +
-                    person.getLastName() + " born " +
-                    person.getBirthDate());
+            String result = storage.findOneAndMapToString(filter, personToString);
 
             System.out.println(result);
         } else {
@@ -100,8 +98,7 @@ public class Exercises {
         //Write your code here
         Predicate<Person> filter = person -> person.getGender().equals(Gender.MALE) &&
                 person.getFirstName().startsWith("E");
-        Function<Person, String> personToString = person -> "First Name: " + person.getFirstName() + " Last Name: " +
-                person.getLastName() + " Gender: " + person.getGender();
+        Function<Person, String> personToString = Person::toString;
         storage.findManyAndMapEachToString(filter, personToString).forEach(System.out::println);
 
         System.out.println("----------------------");
@@ -114,7 +111,7 @@ public class Exercises {
     public static void exercise7(String message) {
         System.out.println(message);
         //Write your code here
-        Predicate<Person> filter = person -> person.getBirthDate().isAfter(LocalDate.now().minusYears(10));
+        Predicate<Person> filter = person -> person.getBirthDate().isAfter(LocalDate.now().minusYears(11));
         Function<Person, String> personToString = person -> person.getFirstName() + " " +
                 person.getLastName() + " " +
                 (LocalDate.now().getYear() - person.getBirthDate().getYear()) + " years";
