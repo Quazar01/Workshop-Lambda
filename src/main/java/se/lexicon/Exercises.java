@@ -5,6 +5,7 @@ import se.lexicon.model.Gender;
 import se.lexicon.model.Person;
 
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -164,6 +165,9 @@ public class Exercises {
     public static void exercise11(String message) {
         System.out.println(message);
         //Write your code here
+        Predicate<Person> filter = person -> person.getFirstName().startsWith("A");
+        Comparator<Person> comparator = Comparator.comparing(Person::getBirthDate);
+        storage.findAndSort(filter, comparator).forEach(System.out::println);
 
         System.out.println("----------------------");
     }
@@ -174,6 +178,9 @@ public class Exercises {
     public static void exercise12(String message) {
         System.out.println(message);
         //Write your code here
+        Predicate<Person> filter = person -> person.getBirthDate().isBefore(LocalDate.of(1950, 1, 1));
+        Comparator<Person> comparator = Comparator.comparing(Person::getBirthDate).reversed();
+        storage.findAndSort(filter, comparator).forEach(System.out::println);
 
         System.out.println("----------------------");
     }
@@ -184,7 +191,10 @@ public class Exercises {
     public static void exercise13(String message) {
         System.out.println(message);
         //Write your code here
-
+        Comparator<Person> comparator = Comparator.comparing(Person::getLastName)
+                .thenComparing(Person::getFirstName)
+                .thenComparing(Person::getBirthDate);
+        storage.findAndSort(comparator).forEach(System.out::println);
         System.out.println("----------------------");
     }
 }
